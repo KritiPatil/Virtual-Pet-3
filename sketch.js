@@ -124,6 +124,7 @@ if(currentTime==(lastFed+1)) {
 function readStock(data) {
 
  foodS = data.val();
+ food.updateFoodStock(foodS);
 
 }
 
