@@ -49,7 +49,7 @@ function setup() {
 
 
 function draw() {  
-background (46, 139, 87)
+background ("background-image")
 
 fill (255, 255, 254);
 textFont('Georgia');
@@ -87,14 +87,14 @@ fedTime.on("value", function(data) {
   lastFed = data.val();
 });
 
-if(gameState !="Hungry") {
+if(gameState !=="Hungry") {
   feed.hide();
   addFood.hide();
-  dog.remove();
+  //dog.remove();
 }else{
   feed.show();
   addFood.show();
-  dog.addImage(sadDog);
+  //dog.addImage(sadDog);
 }
 
 currentTime = hour();
