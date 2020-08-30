@@ -44,12 +44,16 @@ function setup() {
   changeState.on("value", function(data) {
     gameState = data.val();
   });
+
+  feed = createButton("Feed the dog");
+
+addFood = createButton("Add food");
   
 }
 
 
 function draw() {  
-background ("background-image")
+background (0)
 
 fill (255, 255, 254);
 textFont('Georgia');
@@ -72,14 +76,6 @@ if(lastFed>=12) {
     dog.addImage(goodDog);
   }*/
 
-feed = createButton("Feed the dog");
-feed.position(670, 95);
-feed.mousePressed(feedDog);
-
-addFood = createButton("Add food");
-addFood.position(770, 95);
-addFood.mousePressed(addFoods);
-
 food.display();
 
 fedTime = database.ref('FeedTime');
@@ -90,27 +86,41 @@ fedTime.on("value", function(data) {
 if(gameState !=="Hungry") {
   feed.hide();
   addFood.hide();
-  //dog.remove();
+  dog.visible = false;
 }else{
   feed.show();
   addFood.show();
-  //dog.addImage(sadDog);
+  dog.visible = true;
+  dog.addImage(sadDog);
 }
 
 currentTime = hour();
-if(currentTime==(lastFed+1)) {
+
+if(currentTime === 0 && lastFed > 0) {
+  currentTime = 24;
+
+  console.log(currentTime);
+  console.log(lastFed);
+
   update("Playing");
   food.Garden();
 }else if(currentTime==(lastFed+2)) {
   update("Sleeping");
   food.Bedroom();
 }else if(currentTime>(lastFed+2) && currentTime<=(lastFed+4)) {
+  console.log("Hello");
   update("Bathing");
-  food.WashRoom();
+  food.Washroom();
 }else{
   update("Hungry");
   food.display();
 }
+
+feed.position(670, 95);
+feed.mousePressed(feedDog);
+
+addFood.position(770, 95);
+addFood.mousePressed(addFoods);
 
   drawSprites();
   //add styles here
