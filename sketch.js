@@ -48,6 +48,12 @@ function setup() {
   feed = createButton("Feed the dog");
 
 addFood = createButton("Add food");
+
+feed.position(670, 95);
+feed.mousePressed(feedDog);
+
+addFood.position(770, 95);
+addFood.mousePressed(addFoods);
   
 }
 
@@ -59,7 +65,7 @@ fill (255, 255, 254);
 textFont('Georgia');
 stroke(4);
 textSize(20);
-if(lastFed>=12) {
+if(lastFed>=12 && lastFed !== 0) {
    text("Last Fed : "+ lastFed%12 + "PM", 340, 40);
 }else if(lastFed == 0) {
   text("Last Fed : 12 AM", 340, 40);
@@ -98,10 +104,10 @@ currentTime = hour();
 
 if(currentTime === 0 && lastFed > 0) {
   currentTime = 24;
-
+}
   console.log(currentTime);
   console.log(lastFed);
-
+if(currentTime==(lastFed+1)){
   update("Playing");
   food.Garden();
 }else if(currentTime==(lastFed+2)) {
@@ -115,12 +121,6 @@ if(currentTime === 0 && lastFed > 0) {
   update("Hungry");
   food.display();
 }
-
-feed.position(670, 95);
-feed.mousePressed(feedDog);
-
-addFood.position(770, 95);
-addFood.mousePressed(addFoods);
 
   drawSprites();
   //add styles here
@@ -152,7 +152,7 @@ function writeStock(x) {
 }
 
 function feedDog() {
-  feedDog.addImage(happyDog);
+  dog.addImage(happyDog);
 
   food.updateFoodStock(food.getFoodStock()-1);
   database.ref('/').update({
